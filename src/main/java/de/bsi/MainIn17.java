@@ -2,6 +2,8 @@ package de.bsi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 import java.util.stream.BaseStream;
 import java.util.stream.DoubleStream;
@@ -15,6 +17,7 @@ public class MainIn17 {
         patternMatchingInSwitch();
         sequencedList();
         recordPatterns();
+        virtualThread();
     }
 
     private static void patternMatchingInSwitch() {
@@ -68,4 +71,16 @@ public class MainIn17 {
         }
     }
 
+    private static void virtualThread() {
+        try (var executorService = Executors.newCachedThreadPool()) {
+            var future = executorService.submit(() -> {
+                var thread = Thread.currentThread();
+                log.info(thread.threadId() + " : "
+                        + thread.isVirtual());
+            });
+            future.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

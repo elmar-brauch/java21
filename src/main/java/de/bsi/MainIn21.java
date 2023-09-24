@@ -2,19 +2,23 @@ package de.bsi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 import java.util.stream.BaseStream;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 
 public class MainIn21 {
-    /*
+
     private static final Logger log = Logger.getGlobal();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         patternMatchingInSwitch();
         sequencedList();
         recordPatterns();
+        virtualThread();
     }
 
     private static void patternMatchingInSwitch() {
@@ -66,5 +70,17 @@ public class MainIn21 {
             }
         }
     }
-    */
+
+    private static void virtualThread() {
+        try (var executorService = Executors.newVirtualThreadPerTaskExecutor()) {
+            var future = executorService.submit(() -> {
+                var thread = Thread.currentThread();
+                log.info(thread.threadId() + " : "
+                        + thread.isVirtual());
+            });
+            future.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
