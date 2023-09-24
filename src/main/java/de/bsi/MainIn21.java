@@ -2,7 +2,6 @@ package de.bsi;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
@@ -14,7 +13,7 @@ public class MainIn21 {
 
     private static final Logger log = Logger.getGlobal();
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         patternMatchingInSwitch();
         sequencedList();
         recordPatterns();
