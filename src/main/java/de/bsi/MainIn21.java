@@ -14,21 +14,19 @@ public class MainIn21 {
     private static final Logger log = Logger.getGlobal();
 
     public static void main(String[] args) {
-        patternMatchingInSwitch();
+        log.info(patternMatchingInSwitch(DoubleStream.of(1.1)));
         sequencedList();
         recordPatterns();
         virtualThread();
     }
 
-    private static void patternMatchingInSwitch() {
-        BaseStream stream = DoubleStream.of(1.1);
-        switch (stream) {
-            case null -> log.info("null is now a possible case.");
-            case IntStream is when is.isParallel() ->
-                    log.info("Expression in case.");
-            case DoubleStream ds -> log.info("Casted in case.");
+    private static String patternMatchingInSwitch(BaseStream stream) {
+        return switch (stream) {
+            case null -> "null is now a possible case.";
+            case IntStream is when is.isParallel() -> "Expression in case.";
+            case DoubleStream ds -> "Casted in case.";
             default -> throw new IllegalStateException();
-        }
+        };
     }
 
     private static void sequencedList() {

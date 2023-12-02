@@ -14,20 +14,20 @@ public class MainIn17 {
     private static final Logger log = Logger.getGlobal();
 
     public static void main(String[] args) {
-        patternMatchingInSwitch();
+        log.info(patternMatchingInSwitch(DoubleStream.of(1.1)));
         sequencedList();
         recordPatterns();
         virtualThread();
     }
 
-    private static void patternMatchingInSwitch() {
-        BaseStream stream = DoubleStream.of(1.1);
+    private static String patternMatchingInSwitch(BaseStream stream) {
+        // TODO Convert to 1 switch statement.
         if (stream == null)
-            log.info("null is now a possible case.");
+            return "null is now a possible case.";
         else if (stream instanceof IntStream is && is.isParallel())
-            log.info("Expression in case.");
+            return "Expression in case.";
         else if (stream instanceof DoubleStream ds)
-            log.info("Casted in case.");
+            return "Casted in case.";
         else
             throw new IllegalStateException();
     }
@@ -36,6 +36,7 @@ public class MainIn17 {
         // Mutable list created.
         List<String> list = new ArrayList<>(List.of("1st", "2nd", "3rd"));
 
+        // TODO Read with index parameter.
         log.info("Read first & last element in list: %s & %s"
                 .formatted(list.get(0), list.get(list.size() - 1)));
 
@@ -59,9 +60,11 @@ public class MainIn17 {
                 new Pair("2nd", 2));
 
         for (Object entry : mixedList) {
+            // TODO direct access to key and value without getter.
             if (entry instanceof Pair p)
                 log.info("Record has: %s %d".formatted(p.key(), p.value()));
 
+            // TODO Use switch with records
             if (entry instanceof Single s)
                 log.info("Record: " + s);
             else if (entry instanceof Pair)
